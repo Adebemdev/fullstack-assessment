@@ -26,18 +26,15 @@ export class ProductController {
   }
 
   static async update(req: Request, res: Response) {
-    console.log(`del pra::: ${JSON.stringify(req.params)}`);
-    const id = Number(req.params.id);
+    const id = Number(req.query.id);
     const data = req.body;
 
     const updated = await ProductService.update(id, data);
-    res.json(updated);
+    res.json({ message: 'Product updated', data: updated });
   }
 
   static async delete(req: Request, res: Response) {
-    console.log(`del pra::: ${JSON.stringify(req.params)}`);
-
-    const id = parseInt(req.params.id); // <-- VERY important
+    const id = Number(req.query.id); // <-- VERY important
 
     await ProductService.delete(id);
     res.json({ message: 'Product deleted' });
