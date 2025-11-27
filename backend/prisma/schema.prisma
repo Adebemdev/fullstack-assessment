@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(staff)
+  refreshToken String?  // <-- new optional field
+  createdAt DateTime @default(now())
+  products  Product[]
+  documents Document[]
+}
+
+model Product {
+  id         Int      @id @default(autoincrement())
+  name       String
+  sku        String   @unique
+  quantity   Int
+  buyPrice   Float
+  sellPrice  Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  createdBy  User?    @relation(fields: [createdById], references: [id])
+  createdById Int?
+}
+
+model Document {
+  id           Int      @id @default(autoincrement())
+  fileName     String
+  filePath     String
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+  uploadedById Int
+  uploadedAt   DateTime @default(now())
+}
+
+
+enum Role {
+  admin
+  staff
+}
+

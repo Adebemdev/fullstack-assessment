@@ -1,0 +1,14 @@
+# Node dependencies
+node_modules/
+# Build output
+dist/
+build/
+out/
+.next/
+.vercel/
+
+# Enviroment Files
+.env
+.env.local
+.env.development
+.env.production
