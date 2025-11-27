@@ -49,7 +49,7 @@ npm install --legacy-peer-deps
 
 ---
 
-# 🗄 Environment Variables
+# Environment Variables
 
 Create a `.env` file inside **backend/**:
 
@@ -87,7 +87,7 @@ npm run seed
 
 ---
 
-# 🛰 Run Backend Server
+# Run Backend Server
 
 ### Development (Nodemon)
 
