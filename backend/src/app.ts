@@ -16,4 +16,5 @@ app.use('/api/refresh', authMiddleware, authroutes);
 app.use('/api/users', authMiddleware, usersRoutes);
 
 app.use('/api/products', productRoutes);
+
 export default app;

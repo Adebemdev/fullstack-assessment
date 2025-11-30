@@ -21,7 +21,7 @@ productRoutes.post(
 
 // Edit product → staff + admin
 productRoutes.patch(
-  '/',
+  '/:id',
   authMiddleware,
   requireRole('staff', 'admin'),
   ProductController.update
@@ -29,7 +29,7 @@ productRoutes.patch(
 
 // Delete product → admin only
 productRoutes.delete(
-  '/',
+  '/:id',
   authMiddleware,
   requireRole('admin'),
   ProductController.delete

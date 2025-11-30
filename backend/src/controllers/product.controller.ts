@@ -16,6 +16,7 @@ export class ProductController {
 
     res.json(product);
   }
+
   static async create(req: Request, res: Response) {
     const data = req.body;
     const product = await ProductService.create(data);
@@ -26,17 +27,26 @@ export class ProductController {
   }
 
   static async update(req: Request, res: Response) {
-    const id = Number(req.query.id);
-    const data = req.body;
+    const { id } = req.params;
+    const numId = Number(id);
+    if (!numId || isNaN(numId)) {
+      return res.status(400).json({ message: 'Ivamide ID number Format' });
+    }
 
-    const updated = await ProductService.update(id, data);
+    const data = req.body;
+    const updated = await ProductService.update(numId, data);
     res.json({ message: 'Product updated', data: updated });
   }
 
   static async delete(req: Request, res: Response) {
-    const id = Number(req.query.id); // <-- VERY important
+    console.log(req.params);
+    const { id } = req.params;
+    const numId = Number(id);
+    if (!numId || isNaN(numId)) {
+      return res.status(400).json({ message: 'Ivamide ID number Format' });
+    }
 
-    await ProductService.delete(id);
+    await ProductService.delete(numId);
     res.json({ message: 'Product deleted' });
   }
 }
