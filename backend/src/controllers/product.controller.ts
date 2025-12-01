@@ -4,7 +4,11 @@ import { ProductService } from '../services/product.service';
 export class ProductController {
   static async getAll(req: Request, res: Response) {
     const product = await ProductService.getAll();
-    res.json(product);
+    res.json({
+      message: 'All product got successfully',
+      result: product.length,
+      data: product,
+    });
   }
   static async getOne(req: Request, res: Response) {
     const id = Number(req.params.id);

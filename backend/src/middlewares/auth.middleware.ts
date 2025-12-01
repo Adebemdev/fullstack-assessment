@@ -9,7 +9,7 @@ if (!process.env.JWT_SECRET) {
 const JWT_SECRET: Secret = process.env.JWT_SECRET;
 
 export interface AuthRequest extends Request {
-  user?: { userId: number; role: string };
+  user?: { id: number; role: string };
 }
 
 export function authMiddleware(
@@ -22,9 +22,10 @@ export function authMiddleware(
     if (!header) return res.status(400).json({ message: 'Unauthorized' });
     const token = header.split(' ')[1];
     const payload = jwt.verify(token, JWT_SECRET) as any;
-    req.user = { userId: payload.userId, role: payload.role };
+    req.user = { id: payload.sub, role: payload.role };
     next();
   } catch (err) {
+    console.error('JWT verification error:', err);
     return res.status(401).json({ message: 'Invalid token' });
   }
 }

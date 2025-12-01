@@ -34,11 +34,18 @@ model Product {
 
 model Document {
   id           Int      @id @default(autoincrement())
-  fileName     String
-  filePath     String
-  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
-  uploadedById Int
+  fileName     String   // stored name (usually unique or normalized)
+  originalName String   // original user-uploaded name
+  filePath     String   // storage path or public URL
+  mimeType     String   // pdf/docx/jpeg/png etc.
+  size         Int      // file size in bytes
+  fileType     String   // "document" | "image" | "other"
+  uploadedBy   Int
   uploadedAt   DateTime @default(now())
+
+  // Relation to User
+  user         User     @relation(fields: [uploadedBy], references: [id])
+  createdAt DateTime @default(now())
 }
 
 
