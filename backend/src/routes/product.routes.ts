@@ -8,6 +8,8 @@ const productRoutes = Router();
 // All products → everyone logged in
 productRoutes.get('/', authMiddleware, ProductController.getAll);
 
+// productRoutes.get('/paginated', authMiddleware, ProductController.getPaginated);
+
 // Single product → everyone logged in
 productRoutes.get('/:id', authMiddleware, ProductController.getOne);
 

@@ -9,7 +9,7 @@ interface RequesBody {
 }
 
 export class UserController {
-  static async create(req: Request<{}, {}, RequesBody>, res: Response) {
+  static async createUser(req: Request<{}, {}, RequesBody>, res: Response) {
     try {
       const { name, email, password } = req.body;
       const user = await UserService.createUser(name, email, password);

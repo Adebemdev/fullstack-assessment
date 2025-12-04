@@ -3,11 +3,23 @@ import { ProductService } from '../services/product.service';
 
 export class ProductController {
   static async getAll(req: Request, res: Response) {
-    const product = await ProductService.getAll();
+    // Extract page and limit from query Parameters
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const { products, total } = await ProductService.getAll({
+      skip,
+      take: limit,
+    });
     res.json({
       message: 'All product got successfully',
-      result: product.length,
-      data: product,
+      result: products.length,
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      data: products,
     });
   }
   static async getOne(req: Request, res: Response) {

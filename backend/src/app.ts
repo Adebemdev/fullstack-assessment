@@ -8,14 +8,20 @@ import documentRoutes from './routes/document.routes';
 import path from 'path';
 import AppError from './utils/appError';
 import { errorHandler } from './middlewares/errorHandler.middleware';
+import morgan from 'morgan';
 
 const app = express();
 
 // middleware
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+// Routing Mountings
 app.use('/api/auth', authroutes);
 app.use('/api/refresh', authMiddleware, authroutes);
 app.use('/api/users', authMiddleware, usersRoutes);
